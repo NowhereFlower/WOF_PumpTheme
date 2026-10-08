@@ -5,15 +5,17 @@ using System.Collections.Generic;
 public class SBlade : MonoBehaviour
 {
     [SerializeField] private bool isCutting = false;
-
-    Rigidbody2D rb;
-    
-    Camera cam;
+    public float minCutting = 0.1f;
+    private Rigidbody2D rb;
+    private Vector2 previousPos;
+    private Camera cam;
+    private CircleCollider2D circleCollider;
 
     private void Start()
     {
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
     }
 
     private void Update()
@@ -35,18 +37,30 @@ public class SBlade : MonoBehaviour
 
     private void CutUpdate()
     {
-        rb.position = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 newPos = cam.ScreenToWorldPoint(Input.mousePosition);
+        rb.position = newPos;
+        float velocity = (newPos - previousPos).magnitude / Time.deltaTime;
+        if(velocity > minCutting)
+        {
+            //circleCollider.enabled = true;
+        }
+        else
+        {
+            //circleCollider.enabled = false;
+        }
+        previousPos = newPos;
     }
-    //Slicing 
     private void Slicing()
     {
         isCutting = true;
+        //circleCollider.enabled = false;
     }
 
     
     private void NotSlicing()
     {
         isCutting = false;
+        //circleCollider.enabled = false;
     }
 
     
