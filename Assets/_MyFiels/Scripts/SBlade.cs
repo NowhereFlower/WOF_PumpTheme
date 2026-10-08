@@ -53,14 +53,14 @@ public class SBlade : MonoBehaviour
     private void Slicing()
     {
         isCutting = true;
-        //circleCollider.enabled = false;
+        circleCollider.enabled = true;
     }
 
     
     private void NotSlicing()
     {
         isCutting = false;
-        //circleCollider.enabled = false;
+        circleCollider.enabled = false;
     }
 
     
